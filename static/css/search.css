@@ -1,0 +1,22 @@
+#slider_min_max_price {
+    margin-top: 10px;
+
+}
+
+.select_sort {
+    margin-left: 10px;
+    margin-right: 5px;
+    color: white;
+    background: #0069d9;
+}
+
+.select_sort option {
+    color: blue;
+    background: #9fcdff;
+}
+
+.sort-block {
+    float: right;
+
+}
+

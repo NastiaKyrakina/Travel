@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{{ user.username }} | Create post{% endblock %}
+{% block external %}
+
+{% endblock %}
+
+{% block head %}{{ user.username }} | Create post{% endblock %}
+
+{% block content %}
+
+    <form action="" enctype="multipart/form-data" method="post">
+        {% csrf_token %}
+        {% for error in errors_type %}
+            {{ error }} <br/>
+        {% endfor %}
+        {{ form_note.as_p }}
+        <input type="submit" value="{% trans 'Edit' %}"/>
+    </form>
+
+
+
+{% endblock %}

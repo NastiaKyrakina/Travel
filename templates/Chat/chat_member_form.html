@@ -1,0 +1,29 @@
+{% load i18n %}
+{% if chat %}
+    {% trans 'Add members to chat' %} {{ chat.name }}
+{% endif %}
+
+<form class="chat-member-form" method="post" id="member-form" action="{% url 'chat.create_conversation' %}">
+    <div class="block rounded mb-2">
+        {% for error in members_form.members.errors %}
+        <div class="ErrorMessage">{{ error }}</div>
+        {% endfor %}
+
+        {% csrf_token %}
+        <div class="members-error"></div>
+        <label class="" for="id_members">{% trans 'Memder(s)' %} </label>
+        {{ members_form.members }}
+        <datalist id="members_list"></datalist>
+        {% if conversation %}
+            <button class="btn btn-primary" id="start-cnv" type="submit">{% trans 'Start conversation' %}</button>
+        {% else %}
+            <div class="d-flex justify-content-end">
+                <button id="add-member" class="btn btn-primary btn-sm mr-2">{% trans 'Add' %}</button>
+                <button class="btn btn-primary btn-sm" id="send-members" type="submit">{% trans 'Request' %}</button>
+            </div>
+            <ul id="added-members"></ul>
+            <datalist id="members_list"></datalist>
+        {% endif %}
+    </div>
+
+</form>

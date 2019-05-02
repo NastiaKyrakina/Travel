@@ -1,0 +1,72 @@
+<form class="chat-form form-group col-lg-8 col-sm-12" enctype="multipart/form-data"
+      method="post" action="{% url 'chat.create_chat' %}" id="chat-form">
+
+    {% csrf_token %}
+    {% load i18n %}
+    <div class="chat-edit-header block block rounded">
+        <h4 class="pl-3 mb-1">{% trans 'New Chat' %}</h4>
+    </div> <!-- house-edit-header -->
+
+    <div class="chat-edit-body block rounded p-3">
+
+        {% for error in chat_form.non_field_errors %}
+            <div class="ErrorMessage">{{ error }}</div>
+        {% endfor %}
+
+        {% for error in chat_form.name.errors %}
+            <div class="ErrorMessage">{{ error }}</div>
+        {% endfor %}
+
+        <label class="pl-2 mb-0" for="id_name">{% trans 'Title' %}</label>
+        {{ chat_form.name }}
+
+        {% for error in chat_form.type.errors %}
+            <div class="ErrorMessage">{{ error }}</div>
+        {% endfor %}
+        <div class="row chat-type-select">
+            <div class="col-12 d-flex justify-content-around">
+                {% for check in chat_form.chat_type %}
+                    <label for="{{ check.id_for_label }}">
+                        {{ check.choice_label }}
+                        <span class="radio">{{ check.tag }}</span>
+                    </label>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 file-upload col-6">
+                {{ chat_form.image }}
+                {{ chat_form.image_file }}
+                <label class="btn m-0 btn-warning"
+                       for="{{ chat_form.image.id_for_label }}">{% trans 'Chat image' %}</label>
+            </div>
+            <div class="col-12 p-4">
+                {% load staticfiles %}
+                <span id="output"><img class="img-fluid"
+                                       src="{% static 'images/DefaultChat.png' %}"></span>
+            </div>
+            {{ chat_form.image.errors }}
+        </div>
+
+    </div>
+
+    <div class="chat-edit-footer block rounded d-flex justify-content-center">
+        {% if is_creating %}
+            <input type="submit" class="btn btn-primary py-1" value="{% trans 'Create' %}"/>
+        {% else %}
+            <input type="submit" class="btn btn-warning py-1" value="{% trans 'Edit' %}"/>
+        {% endif %}
+    </div> <!-- house-edit-footer -->
+
+    {% for error in errors_type %}
+        {{ error }} <br/>
+    {% endfor %}
+</form>
+
+{% block script %}
+
+    {% load staticfiles %}
+    <script src="{% static '/js/load_image_chat.js' %}" type="text/javascript"></script>
+
+{% endblock %}

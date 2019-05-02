@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}{{ user.username }} | Diary{% endblock %}
+
+
+
+{% block content %}
+
+    <div class="d-flex justify-content-center">
+        {% include 'UserProfile/create_edit_diary_block.html' %}
+    </div>
+
+
+{% endblock %}
+
+{% block script %}
+
+    {% load staticfiles %}
+
+    <script src="{% static '/js/diary-image.js' %}"></script>
+
+{% endblock %}

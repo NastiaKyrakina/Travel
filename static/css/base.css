@@ -1,0 +1,48 @@
+#load_href_1 {
+    background: chartreuse;
+    font-size: large;
+    cursor: pointer;
+}
+
+.delete_element {
+    background: chartreuse;
+    cursor: pointer;
+}
+
+input.UncorrectValue {
+    border-color: red !important;
+}
+
+.ErrorMessage {
+    background-color: darksalmon;
+    font-weight: bold;
+}
+
+.owner-message {
+    background-color: #1e7e34;
+}
+
+.remove-el {
+    color: red;
+    font-weight: bolder;
+}
+
+.new-message {
+    background-color: #99caff;
+    color: #007bff;
+    font-weight: bold;
+}
+
+.sucs-show {
+    display: none;
+}
+
+.message-img img {
+    border-radius: 15px !important;
+
+}
+
+.btn {
+    word-wrap: break-word;
+    overflow-x: hidden;
+}
