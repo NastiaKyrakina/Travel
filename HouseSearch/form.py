@@ -182,7 +182,8 @@ class SearchHousesForm(forms.Form):
         })
     )
 
-    req_max_price = House.objects.aggregate(Max('price'))['price__max']
+    req_max_price = 100
+    # House.objects.aggregate(Max('price'))['price__max']
 
     min_price = forms.DecimalField(
         label='From',
@@ -218,11 +219,11 @@ class SearchHousesForm(forms.Form):
             'placeholder': '1',
             'title': _('Enter rooms count'),
             'min': 1,
-            'max': House.objects.aggregate(Max('rooms'))['rooms__max'],
+            'max': 100,
             'class': 'form-control'
         })
     )
-
+    # House.objects.aggregate(Max('rooms'))['rooms__max'],
     sleeper = forms.IntegerField(
         required=False,
         widget=forms.NumberInput(attrs={
@@ -231,11 +232,12 @@ class SearchHousesForm(forms.Form):
             'placeholder': '1',
             'title': _('Enter sleeper count'),
             'min': 1,
-            'max': House.objects.aggregate(Max('sleeper'))['sleeper__max'],
+            'max': 100,
             'class': 'form-control'
         })
 
     )
+    # House.objects.aggregate(Max('sleeper'))['sleeper__max'],
     active = forms.BooleanField(
         label='Only active',
         required=False,
