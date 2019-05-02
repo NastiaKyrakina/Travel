@@ -129,4 +129,5 @@ Authentication/migrations/*
 Chat/migrations/*
 HouseSearch/migrations/*
 UserProfile/migrations/*
-staticfiles
+
+static/node_modules/*
