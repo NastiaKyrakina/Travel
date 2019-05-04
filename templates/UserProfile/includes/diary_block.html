@@ -1,0 +1,39 @@
+<div class="diary" id="diary_element-{{ diary.pk }}">
+    {% load i18n %}
+
+    <div class="diary-header block-header block">
+        <h5 class="pl-1 m-0"> {{ diary.title }} </h5>
+    </div> <!-- note-header -->
+
+
+    <div class="diary-content block">
+        <div class="d-flex justify-content-center">
+            <div class="image">
+                {% if diary.photo %}
+                    <img src="{{ diary.photo.url }}" class="img-fluid">
+                {% else %}
+                    {% load staticfiles %}
+                    <img src="{% static 'images/DefaultHouse.png' %}" class="img-fluid">
+                {% endif %}
+            </div>
+        </div>
+
+        <p class="m-1"><strong>{% trans 'Date' %}: </strong>
+            <small>{{ diary.date_start }} - {{ diary.date_finish }}</small>
+        </p>
+        <p class="m-1"><strong>{% trans 'Status' %}:</strong>
+            {% if diary.is_active %}
+                <span class="text-success">{% trans 'Active' %}</span>
+            {% elif diary.is_frozen %}
+                <span class="text-info">{% trans 'Frozen' %}</span>
+            {% else %}
+                <span class="text-secondary">{% trans 'Finished' %}</span>
+            {% endif %}
+        </p>
+    </div> <!-- diary-content -->
+
+    <div class="diary-footer block-footer block d-flex justify-content-center">
+        <a class="btn btn-primary py-1" href="{% url 'user_profile.diary_page' diary.id %}">{% trans 'Open' %}</a>
+    </div> <!-- diary-footer -->
+
+</div> <!-- note -->

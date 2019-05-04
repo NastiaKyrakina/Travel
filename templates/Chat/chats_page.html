@@ -1,0 +1,221 @@
+{% extends "base.html" %}
+
+{% block title %}{{ user.username }} | Chats{% endblock %}
+
+{% block head %}{{ user.username }} | Chats{% endblock %}
+
+{% block content %}
+    {% load i18n %}
+
+    <div class="col-12">
+        <div class="row">
+            <div class="col-4">
+                <div class="row block shadow rounded">
+                    <div class="col-4 pr-1">
+                        <button class="btn btn-primary col-12" id="create-chat">{% trans 'New Chat' %}</button>
+                    </div>
+                    <div class="col-8 pl-1">
+                        <button class="btn btn-primary col-12"
+                                id="create-conversation">{% trans 'New conversation' %}</button>
+                    </div>
+                </div>
+                <div class="chat-list">
+                    {% for chat in chats %}
+                        {% include 'Chat/chat_mini_block.html' %}
+                    {% empty %}
+                        {% trans "You haven't any chats" %}
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-8 chat-container"></div>
+        </div>
+    </div>
+
+    <div class="">
+    </div>
+
+{% endblock %}
+
+{% block script %}
+
+    {% load staticfiles %}
+    <script src="{% static 'js/reconnecting-websocket.min.js' %}"></script>
+    <script src="{% static '/js/js.cookie.js' %}"></script>
+    <!-- Load file to note -->
+    <script src="{% static '/js/load_file.js' %}" type="text/javascript"></script>
+
+    <script src="{% static '/js/jchat.js' %}" type="text/javascript"></script>
+
+    <script>
+
+
+        CreateChat();
+        ShowEditDelete();
+        OnClickDeleteChat();
+        OnClickEditChat();
+
+
+        var user = {{request.user.id }};
+
+        var chatSocket = new ReconnectingWebSocket(
+            'ws://' + window.location.host +
+            '/ws/chat/chats/');
+
+        chatSocket.onopen = function (event) {
+
+            let hash = location.hash.replace("#", "");
+            location.hash = "";
+            if (hash) {
+                chatSocket.send(
+                    JSON.stringify({
+                        'command': 'join',
+                        'chat': hash,
+                    })
+                );
+            }
+        };
+
+        chatSocket.onmessage = function (message) {
+            var data = JSON.parse(message.data);
+
+            if (data.join) {
+                console.log("Joining room " + data.join);
+
+                $(".chat-container").load('/chat/chats/' + data.join + '/', function () {
+                    LoadMessages();
+                    RequaerUsers();
+                    $('.chat-title#block-' + data.join).closest('.new-message').removeClass("new-message");
+
+                    $(".message-form").load('/chat/create_message/',
+                        function () {
+
+                            PrevievFile();
+                            ShowDeleteMessage();
+                            $('#form-message').on('submit', function (e) {
+                                e.preventDefault();
+                                data_to_send = {
+                                    "command": "send",
+                                    'chat': data.join,
+                                    'message': $(this).find('textarea').val()
+                                };
+
+                                var has_files = false;
+                                $("input[type='file']").each(
+                                    function (index, element) {
+                                        console.log($(element).val());
+                                        if ($(element).val()) {
+                                            has_files = true;
+                                            return false;
+                                        }
+                                    });
+
+                                if (has_files) {
+                                    form_mess = new FormData($(this).get(0));
+                                    form_mess.append('chat_slug', data.join);
+                                    $.ajax({
+                                        type: $(this).attr('method'),
+                                        url: $(this).attr('action'),
+                                        contentType: false,
+                                        processData: false,
+                                        data: form_mess,
+                                        success: function (data) {
+                                            data_to_send['message_id'] = data['message'];
+                                            chatSocket.send(JSON.stringify(data_to_send));
+                                        }
+                                    });
+                                }
+                                else {
+                                    chatSocket.send(JSON.stringify(data_to_send));
+                                }
+
+                                return false;
+                            });
+                            $('.delete-mess-button').on('click', function (e) {
+
+                                console.log('cl');
+                                var data_to_send = {
+                                    "command": "delete",
+                                    'chat': data.join,
+                                    'message': $(this).attr('id').split('-')[2]
+                                };
+                                chatSocket.send(JSON.stringify(data_to_send));
+                            });
+                        })
+                });
+
+            } else {
+                if (data.leaf) {
+                    console.log("Leaving room " + data.leaf);
+                    $(".chat-container").empty();
+                }
+                else {
+                    if (data.message) {
+
+                        new_message = document.createElement('div');
+                        new_message.innerHTML = data.message;
+
+                        if (data.user =={{ request.user.id }}) {
+                            new_message.className = 'owner-message';
+                        }
+
+                        $('#' + data.chat + " .content").append(new_message);
+
+                        $('#form-message')[0].reset();
+                        $('.file-label').empty();
+
+                    }
+                    else {
+                        if (data.delete) {
+
+                            message_id = data.delete;
+                            $("#message-" + message_id).empty();
+                        }
+
+                    }
+                }
+            }
+        }
+
+        inChat = function (chatSlug) {
+            return $("#" + chatSlug).length > 0;
+        };
+
+
+        $('.chat-title').on('click', function (e) {
+            e.preventDefault();
+            console.log('click');
+
+            slug = $(this).attr('id').split('-')[1];
+
+            if (inChat(slug)) {
+
+                chatSocket.send(
+                    JSON.stringify({
+                        'command': 'leave',
+                        'chat': slug,
+                    })
+                );
+            } else {
+                $(this).parent().removeClass('new-message');
+                chatSocket.send(
+                    JSON.stringify({
+                        'command': 'join',
+                        'chat': slug,
+                    })
+                );
+
+            }
+            return false;
+
+        });
+
+
+        chatSocket.onclose = function (e) {
+            console.error('Chat socket closed unexpectedly');
+        };
+
+
+    </script>
+
+
+{% endblock %}

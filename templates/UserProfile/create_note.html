@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}{{ user.username }} | Post{% endblock %}
+{% block external %}
+
+{% endblock %}
+
+{% block head %}{{ user.username }} | Post{% endblock %}
+
+{% block content %}
+
+    {% include 'UserProfile/create_edit_note_block.html' %}
+
+{% endblock %}

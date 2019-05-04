@@ -1,0 +1,112 @@
+{% load i18n %}
+<form method="get" action="" id="form-multi-search">
+
+    {{ form_search.non_field_errors }}
+    <div class="row">
+        <div class="col-6">
+        </div>
+        <div class="col-6">
+           <span class="sort-block">
+                <label for="id_sort" class="ml-2">{% trans 'Sort by' %}</label>
+                {{ form_search.sort }}
+           </span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <label for="id_country" class=" ml-2">{% trans 'Country' %}</label>
+            {{ form_search.country.errors }}
+            {{ form_search.country }}
+        </div>
+
+        <datalist id="countries"></datalist>
+
+
+        <div class="col-6">
+            <label for="id_country" class=" ml-2">{% trans 'City' %}</label>
+            {{ form_search.city.errors }}
+            {{ form_search.city }}
+        </div>
+        </div>
+
+    <div class="row justify-content-between">
+        <div class="col-6">
+            <input class="btn btn-primary col-5" type="submit" name='search' value="{% trans 'Search' %}"/>
+            <input class="btn btn-primary col-6" type="submit" name='reset' value="{% trans 'Reset all result' %}"/>
+        </div>
+
+        <div class="dropdown col-6">
+            <button class="btn btn-secondary dropdown-toggle col-12" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {% trans 'More options' %}
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                {{ form_search.type.errors }}
+                <div class="col-12 d-flex justify-content-around">
+                    {% for check in form_search.type %}
+                        {% if forloop.counter < 4 %}
+                            <label for="{{ check.id_for_label }}">
+                                {{ check.choice_label }}
+                                <span class="radio">{{ check.tag }}</span>
+                            </label>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+                <div class="col-12 d-flex justify-content-around">
+                    {% for check in form_search.type %}
+                        {% if forloop.counter >= 4 %}
+                            <label for="{{ check.id_for_label }}">
+                                {{ check.choice_label }}
+                                <span class="radio">{{ check.tag }}</span>
+                            </label>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+                <div class="col-12">
+                    {{ form_search.min_price.errors }}
+                    {{ form_search.max_price.errors }}
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="{{ form_search.min_price.id_for_label }}">{% trans 'From' %}</label>
+                            {{ form_search.min_price }}
+                        </div>
+                        <div class="col-6">
+                            <label for="{{ form_search.max_price.id_for_label }}">{% trans 'To' %}</label>
+                            {{ form_search.max_price }}
+                        </div>
+                    </div>
+                    <div class="col-12 mb-4" id="slider_min_max_price"></div>
+                    {{ form_search.rooms.errors }}
+                    {{ form_search.sleeper.errors }}
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="{{ form_search.rooms.id_for_label }}">{% trans 'Rooms' %}</label>
+                            {{ form_search.rooms }}
+                        </div>
+                        <div class="col-6">
+                            <label for="{{ form_search.sleeper.id_for_label }}">{% trans 'Sleeper' %}</label>
+                            {{ form_search.sleeper }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- dropdown -->
+
+        <div class="col-6 p-2">
+            {{ form_search.active.errors }}
+            <label for="{{ form_search.active.id_for_label }}">{% trans 'Only active:' %}</label>
+            {{ form_search.active }}
+        </div>
+        <div class="col-6 p-2">
+            {{ form_search.public.errors }}
+            <label for="{{ form_search.public.id_for_label }}">{% trans 'After date:' %}</label>
+            {{ form_search.public }}
+        </div>
+        <div class="hideInput">
+            {{ form_search.text }}
+        </div>
+    </div>
+</form>

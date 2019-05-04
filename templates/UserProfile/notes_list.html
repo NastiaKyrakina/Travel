@@ -1,0 +1,11 @@
+<div class='notes-list'>
+{% if notes %}
+
+    {% for note in notes %}
+        {% include "UserProfile/note_block.html" %}
+    {% endfor %}
+
+{% else %}
+    {{ message }}
+{% endif %}
+</div>

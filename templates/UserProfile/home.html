@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{{ user.username }} | {% trans 'Profile' %}{% endblock %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="left-column col-sm-12 col-md-3">
+
+            <!-- Name and avatar block -->
+            {% include "UserProfile/includes/userNameAvatar.html" %}
+
+            {% if user.userinfo %}
+                <!-- Information block -->
+                {% include "UserProfile/includes/userInfo.html" %}
+            {% endif %}
+
+        </div> <!-- left-column -->
+        <div class="main-column col-sm-12 col-md-6">
+
+            {% if request.user == user %}
+            <!--Блок для створення постів завантажується через Ajax-->
+            <div class="create-node block block-header mb-2"></div>
+            {% else %}
+                <div class="block block-header mb-2"></div>
+            {% endif %}
+
+            <div class="user-posts">
+                {% include "UserProfile/includes/notes_list.html" %}
+            </div>
+
+
+            <div class="block block-footer d-flex justify-content-center">
+                <button type="button" class="load_href_1 btn btn-primary">{% trans 'Load prevision notes' %}</button>
+            </div>
+
+
+        </div> <!-- main-column -->
+
+        <div class="right-column col-sm-12 col-md-3">
+            {% include "UserProfile/includes/diaries_list.html" %}
+        </div>
+    </div> <!-- row -->
+{% endblock %}
+
+
+{% block script %}
+
+    {% load staticfiles %}
+
+    <script src="{% static '/js/form.js' %}"></script>
+    <script src="{% static '/js/js.cookie.js' %}"></script>
+    <script src="{% static '/js/ajax_csrf.js' %}"></script>
+
+    <!-- Load file to note -->
+    <script src="{% static '/js/load_file.js' %}" type="text/javascript"></script>
+    <script src="{% static '/js/ajax_get_notes.js' %}"></script>
+    <script src="{% static '/js/show_modal.js' %}"></script>
+    <script src="{% static '/js/short_text.js' %}"></script>
+
+
+{% endblock %}

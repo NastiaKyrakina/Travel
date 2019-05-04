@@ -1,0 +1,48 @@
+{% block content %}
+    {% load i18n %}
+    <!-- Information block -->
+    <div class="information-block">
+        <h5 class="block block-header">
+            {% if request.user == user %}
+                <a href="{% url 'info' %}">{% trans 'Information' %}</a>
+            {% else %}
+                {% trans 'Information' %}
+            {% endif %}
+        </h5>
+        <div class="block block-footer">
+
+            {% if user.userinfo.status %}
+                <p><i class="fas fa-user-tag"></i> {% trans 'Status' %}: {{ user.userinfo.get_status_display }} </p>
+            {% endif %}
+
+            {% if user.userinfo.country %}
+                <p>
+                    <i class="fas fa-map-marker-alt"></i>
+                    {{ user.userinfo.country }}{% if user.userinfo.city %}<span>, {{ user.userinfo.city }}</span>
+                {% endif %}
+                </p>
+            {% endif %}
+
+            {% if user.userinfo.birthday %}
+                <p><i class="fas fa-user"></i> {% trans 'Birthday' %}: {{ user.userinfo.birthday|date:'j E' }}</p>
+            {% endif %}
+
+            {% if user.userinfo.phone_num %}
+                <p><i class="fas fa-phone-square"></i>
+                    +{{ user.userinfo.country.phone_code }} {{ user.userinfo.phone_num }}</p>
+            {% endif %}
+            {% if user.has_adv %}
+                <p><i class="fas fa-home"></i>
+                    <a href="{% url 'users_house' user.id %}">{% trans 'Advert' %}</a>
+                </p>
+            {% endif %}
+
+
+        </div>
+    </div>
+
+    {% if user.userinfo.info %}
+        {% include "UserProfile/includes/userStatus.html" %}
+    {% endif %}
+
+{% endblock %}
