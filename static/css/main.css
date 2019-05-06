@@ -11,11 +11,6 @@ html, body {
     min-height: 100%; /* Для прижатия футера к низу */
 }
 
-.navbar-spacer {
-    height: 75px; /* Размер навбара */
-    clear: both;
-}
-
 .footer-spacer {
     height: 120px; /* Размер футера */
     clear: both;
@@ -25,6 +20,17 @@ footer {
     background-color: #d1d7e0;
     height: 120px; /* Размер футера */
     margin-top: -120px;
+}
+
+.navbar-spacer {
+    height: 75px; /* Размер навбара */
+    clear: both;
+}
+
+.navbar {
+    z-index: 1;
+    top: 0;
+    color: white;
 }
 
 
@@ -80,11 +86,7 @@ footer {
     margin-bottom: 10px !important;
 }
 
-.navbar {
-    z-index: 1;
-    top: 0;
-    color: white;
-}
+
 
 .file-upload label {
     cursor: pointer;
