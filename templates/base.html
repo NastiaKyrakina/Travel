@@ -28,11 +28,10 @@
 
         <!--Для пошуку-->
         <script src="{% static 'js/main_search.js' %}"></script>
-
     {% endblock %}
 
 </head>
-<body class="main">
+<body>
 {% load i18n %}
 
     {% block nav %}
@@ -114,43 +113,35 @@
                 </ul>
             </div> <!-- navbar-collapse -->
 
-
         </nav>
     {% endblock %}
 
-    <h1>{% block head %}{% endblock %}</h1>
-
     <div class="container">
+        <div class="navbar-spacer"></div>
         {% block content %}
         {% endblock %}
+        <div class="footer-spacer"></div>
     </div> <!-- container-fluid -->
-
-<div class="main-footer text-secondary py-3 mt-5 mb-0 d-flex justify-content-start" style="background-color: #d1d7e0">
-    <div class="col-3">
-        <small>
-
-                <strong>© Travel App 2018</strong>
-                <br>
-            {% trans 'This web application is a project for the KRKM DNU College.' %}
-
-        </small>
-    </div>
-    <div class="col-3">
-        <small>
-
-            <strong>{% trans 'Creators' %}</strong>
-                <br>
-            {% trans 'Nastya Kurakina' %} - https://github.com/NastiaKyrakina
-                <br>
-            {% trans 'Maxim Sedykh' %} - https://github.com/Steldev
-
-        </small>
-
-    </div>
-
-</div>
-
 </body>
+
+<footer class="text-secondary p-3 d-flex justify-content-start">
+    <div class="col-3">
+        <small>
+            <strong>© Travel App 2019</strong>
+            <br>
+            {% trans 'This web application is a project for the KRKM DNU College.' %}
+        </small>
+    </div>
+    <div class="col-3">
+        <small>
+            <strong>{% trans 'Creators' %}</strong>
+            <br>
+            {% trans 'Nastya Kurakina' %} - https://github.com/NastiaKyrakina
+            <br>
+            {% trans 'Maxim Sedykh' %} - https://github.com/Steldev
+        </small>
+    </div>
+</footer>
 
 {% block script %}
 {% endblock %}

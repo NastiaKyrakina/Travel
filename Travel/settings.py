@@ -46,10 +46,10 @@ INSTALLED_APPS = [
     'django.contrib.postgres',
     'django_cleanup',
     'modeltranslation',
-    'Authentication',
-    'UserProfile',
-    'HouseSearch',
-    'Chat',
+    'Authentication.apps.AuthenticationConfig',
+    'UserProfile.apps.UserprofileConfig',
+    'HouseSearch.apps.HouseSearchConfig',
+    'Chat.apps.ChatConfig',
 ]
 
 MIDDLEWARE = [
@@ -91,7 +91,7 @@ WSGI_APPLICATION = 'Travel.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'travel_app',
+        'NAME': 'travel',
         'USER': 'postgres',
         'PASSWORD': '1234567890',
         'HOST': 'localhost',
