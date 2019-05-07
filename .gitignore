@@ -14,7 +14,10 @@ dist/
 downloads/
 eggs/
 .eggs/
+<<<<<<< HEAD
 lib/
+=======
+>>>>>>> 3d575f009449660c6411ad733ec0ba50c273bd40
 lib64/
 parts/
 sdist/
@@ -130,4 +133,14 @@ Chat/migrations/*
 HouseSearch/migrations/*
 UserProfile/migrations/*
 
+
 static/node_modules/*
+static/node_modules/*
+
+Authentication/__pycache__/*
+Chat/__pycache__/*
+HouseSearch/__pycache__/*
+UserProfile/__pycache__/*
+
+Travel/__pycache__/*
+

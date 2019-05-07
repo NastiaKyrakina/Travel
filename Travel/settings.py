@@ -46,10 +46,10 @@ INSTALLED_APPS = [
     'django.contrib.postgres',
     'django_cleanup',
     'modeltranslation',
-    'Authentication',
-    'UserProfile',
-    'HouseSearch',
-    'Chat',
+    'Authentication.apps.AuthenticationConfig',
+    'UserProfile.apps.UserprofileConfig',
+    'HouseSearch.apps.HouseSearchConfig',
+    'Chat.apps.ChatConfig',
 ]
 
 MIDDLEWARE = [

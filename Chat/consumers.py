@@ -4,7 +4,9 @@ from asgiref.sync import async_to_sync
 from channels.generic.websocket import JsonWebsocketConsumer
 from .models import Chat, Message, Member
 from datetime import datetime
-
+import json
+from .models import Chat, Message, Member
+from datetime import datetime
 
 class ChatConsumer1(JsonWebsocketConsumer):
     def connect(self):
@@ -102,6 +104,11 @@ class ChatConsumer1(JsonWebsocketConsumer):
             chat = Chat.objects.get(slug=chat_slug)
             user = self.scope['user']
             if message_id != -1:
+                print('111')
+                chat = Chat.objects.get(slug=chat_slug)
+                user = self.scope['user']
+            if message_id != -1:
+                print('to')
                 new_message = Message.objects.get(id=message_id)
             else:
                 new_message = Message(chat=chat, user=user, text=message)
@@ -131,6 +138,8 @@ class ChatConsumer1(JsonWebsocketConsumer):
         }
         print('on')
         async_to_sync(self.channel_layer.group_send)(slug, content)
+
+
 
     def chat_join(self, event):
         async_to_sync(self.send_json(
