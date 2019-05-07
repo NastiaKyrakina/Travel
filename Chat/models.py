@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from Lib import FFD
 from django.utils.translation import ugettext_lazy as _
 
+
 class ChatManager(models.Manager):
 
     def users_chats(self, user_id):
