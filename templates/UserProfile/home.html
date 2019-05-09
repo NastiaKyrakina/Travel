@@ -22,7 +22,9 @@
             <!--Блок для створення постів завантажується через Ajax-->
             <div class="create-node block block-header mb-2"></div>
             {% else %}
-                <div class="block block-header mb-2"></div>
+                <div class="block block-header mb-2">
+                    @{{ user.username }} notes
+                </div>
             {% endif %}
 
             <div class="user-posts">

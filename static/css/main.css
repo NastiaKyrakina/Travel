@@ -33,9 +33,10 @@ footer {
     color: white;
 }
 
+.horizontal-line {
+    margin: 0px;
+}
 
-/*** Config ***/
-/* block */
 .block {
 	padding: 5px;
 	margin-bottom: 10px;
@@ -43,18 +44,23 @@ footer {
 	border-radius: 3px;
 }
 
-.information-block p {
-	margin-bottom: 3px;
+/* note */
+.note-header>div {
+    display: inline-block;
 }
 
-/* user info */
+.note-interaction {
+    float: right;
+}
+
+.note-content {
+    margin: 0 -5px;
+}
 
 .avatar img {
 	border-radius: 7px;
 	margin-bottom: 15px;
 }
-
-/* note */
 
 .avatar-small {
     width: 50px;
@@ -63,38 +69,17 @@ footer {
     float: left;
 }
 
-.note-header {
-	margin: 0 0 3px 0 !important;
-	height: 60px;
-}
-
-.note-locate button {
-	float: right;
-}
-
-.note-stats a {
-	margin-right: 15px;
-	float: right;
-	font-size: 26px;
-}
-
-.auth-body, .house-edit-body, .house-page-body, .diary-edit-body, .diary-content, .info-block {
-    margin-bottom: 3px !important;
-}
+/* old css */
 
 .search-header, .rate-header {
     margin-bottom: 10px !important;
 }
-
-
 
 .file-upload label {
     cursor: pointer;
     width: 100%;
     color: white;
 }
-
-
 
 .file-label {
     display: none;
