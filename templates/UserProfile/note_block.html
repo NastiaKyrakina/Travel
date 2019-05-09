@@ -89,12 +89,10 @@
             {% endfor %}
         </div>
 
-        <div class="note-footer row align-items-center">
-            <div class="note-time col-6 ">
-                <p class="note_date text-muted mx-2 my-0">
-                    <small>{{ note.date_public| date:"d-m-Y H:i" }}</small>
-                </p>
-            </div>
+        <div class="note-footer">
+            <p class="note_date text-muted mx-2 my-0 text-right">
+                <small>{{ note.date_public| date:"d-m-Y H:i" }}</small>
+            </p>
         </div>
     </div> <!-- note-content -->
 

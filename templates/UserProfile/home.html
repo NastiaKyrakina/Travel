@@ -20,10 +20,10 @@
 
             {% if request.user == user %}
             <!--Блок для створення постів завантажується через Ajax-->
-            <div class="create-node block block-header mb-2"></div>
+            <div class="create-node block"></div>
             {% else %}
-                <div class="block block-header mb-2">
-                    @{{ user.username }} notes
+                <div class="block">
+                    <h5 class="mb-1">@{{ user.username }}'s notes </h5>
                 </div>
             {% endif %}
 
