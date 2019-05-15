@@ -1,0 +1,8 @@
+.inner-row{
+    display: flex;
+
+}
+
+.chat-header{
+    height: 4em;
+}

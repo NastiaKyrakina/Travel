@@ -57,10 +57,10 @@ class Chat(models.Model):
     def set_slug(self):
         self.slug = '%s_chat' % self.id
 
-    def get_chat_title(self, user):
+    def get_chat_title(self, username):
         if self.chat_type == Chat.P2P:
             title_set = self.name.split('|')
-            if user.username == title_set[0]:
+            if username == title_set[0]:
                 title = title_set[1]
             else:
                 title = title_set[0]
@@ -77,7 +77,6 @@ class Chat(models.Model):
             if opponent and opponent.user.userinfo:
                 return opponent.user.userinfo.big_photo
         return None
-
 
     def save(self, *args, **kwargs):
         super(Chat, self).save(*args, **kwargs)

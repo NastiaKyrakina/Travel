@@ -4,13 +4,17 @@
 
 {% block head %}{{ user.username }} | Chats{% endblock %}
 
+ {% block external %}
+        {{ block.super }}
+        {% load staticfiles %}
+        <link rel="stylesheet" href="{% static 'css/chat.css' %}">
+{% endblock %}
+
 {% block content %}
     {% load i18n %}
-
-    <div class="col-12">
-        <div class="row">
+    <div class="row">
             <div class="col-4">
-                <div class="row block shadow rounded">
+                <div class="row block shadow rounded chat-header mb-2">
                     <div class="col-4 pr-1">
                         <button class="btn btn-primary col-12" id="create-chat">{% trans 'New Chat' %}</button>
                     </div>
@@ -28,13 +32,9 @@
                 </div>
             </div>
             <div class="col-8 chat-container"></div>
-        </div>
     </div>
 
-    <div class="">
-    </div>
-
-{% endblock %}
+ {% endblock %}
 
 {% block script %}
 
