@@ -12,18 +12,15 @@
 
 {% block content %}
     {% load i18n %}
-    <div class="row">
-            <div class="col-4">
-                <div class="row block shadow rounded chat-header mb-2">
-                    <div class="col-4 pr-1">
-                        <button class="btn btn-primary col-12" id="create-chat">{% trans 'New Chat' %}</button>
-                    </div>
-                    <div class="col-8 pl-1">
-                        <button class="btn btn-primary col-12"
+    <main>
+            <div class="chat-right-side">
+                <div class="chat-header">
+                   <button class="chat-button" id="create-chat">{% trans 'New Chat' %}</button>
+                   <button class="chat-button"
                                 id="create-conversation">{% trans 'New conversation' %}</button>
-                    </div>
+
                 </div>
-                <div class="chat-list">
+                <div class="chats-list">
                     {% for chat in chats %}
                         {% include 'Chat/chat_mini_block.html' %}
                     {% empty %}
@@ -31,8 +28,8 @@
                     {% endfor %}
                 </div>
             </div>
-            <div class="col-8 chat-container"></div>
-    </div>
+            <div class="chat-container"></div>
+    </main>
 
  {% endblock %}
 
@@ -93,12 +90,7 @@
                             ShowDeleteMessage();
                             $('#form-message').on('submit', function (e) {
                                 e.preventDefault();
-                                data_to_send = {
-                                    "command": "send",
-                                    'chat': data.join,
-                                    'message': $(this).find('textarea').val()
-                                };
-
+                                let messageText = $(this).find('textarea').val();
                                 var has_files = false;
                                 $("input[type='file']").each(
                                     function (index, element) {
@@ -108,6 +100,16 @@
                                             return false;
                                         }
                                     });
+
+                                if (!has_files && messageText)    {
+                                    return;
+                                }
+
+                                data_to_send = {
+                                    "command": "send",
+                                    'chat': data.join,
+                                    'message': messageText
+                                };
 
                                 if (has_files) {
                                     form_mess = new FormData($(this).get(0));
@@ -132,7 +134,7 @@
                             });
                             $('.delete-mess-button').on('click', function (e) {
 
-                                console.log('cl');
+
                                 var data_to_send = {
                                     "command": "delete",
                                     'chat': data.join,
@@ -151,11 +153,11 @@
                 else {
                     if (data.message) {
 
-                        new_message = document.createElement('div');
+                        let new_message = document.createElement('div');
                         new_message.innerHTML = data.message;
 
                         if (data.user =={{ request.user.id }}) {
-                            new_message.className = 'owner-message';
+                            new_message.setAttribute("class","user-owner");
                         }
 
                         $('#' + data.chat + " .content").append(new_message);
@@ -164,6 +166,7 @@
                         $('.file-label').empty();
 
                     }
+
                     else {
                         if (data.delete) {
 
@@ -174,7 +177,7 @@
                     }
                 }
             }
-        }
+        };
 
         inChat = function (chatSlug) {
             return $("#" + chatSlug).length > 0;
