@@ -3,7 +3,6 @@ body {
 }
 
 html, body {
-
     height: 100%; /* Для прижатия футера к низу */
 }
 
@@ -34,10 +33,10 @@ footer {
 }
 
 .horizontal-line {
-    margin: 0px;
+    margin: 0; /* Отступы от разделяющей линии */
 }
 
-.block {
+.block { /* Конфигурация блоков всех страниц */
 	padding: 5px;
 	margin-bottom: 7px;
 	background-color: #fff;

@@ -111,6 +111,16 @@ CHANNEL_LAYERS = {
     },
 }
 
+
+# Email send
+# https://docs.djangoproject.com/en/2.2/topics/email/
+
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'travelappservice@gmail.com'
+EMAIL_HOST_PASSWORD = 'dkrkmkurakinasedykh'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
@@ -161,7 +171,6 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
-
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [

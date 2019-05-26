@@ -5,6 +5,20 @@ from UserProfile.models import *
 
 from datetime import datetime
 
+class VerificationSendForm(forms.Form):
+    subject = forms.CharField(
+        required=False,
+        widget=forms.TextInput()
+    )
+    message = forms.CharField(
+        required=False,
+        widget=forms.Textarea()
+    )
+    images = forms.ImageField(
+        required=False,
+        widget=forms.FileInput(),
+    )
+
 class NoteForm(forms.ModelForm):
     class Meta:
         model = Note
