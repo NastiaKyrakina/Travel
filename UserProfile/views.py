@@ -8,9 +8,32 @@ from UserProfile.models import UserExt, save_attach, Diary
 
 from datetime import datetime
 
+from django.core.mail.message import EmailMessage
+
 from Lib.FileFormats import handle_uploaded_file
 
 # Create your views here.
+
+def verification_send_page(request):
+    user = UserExt.objects.get(pk=request.user.pk)
+    form_verification_send = VerificationSendForm(request.POST)
+    if request.method == 'POST':
+        print("123:" + str(form_verification_send.is_valid()))
+        if form_verification_send.is_valid():
+            # Создание, наполнение, отплавка сообщения
+            email = EmailMessage()
+            email.subject = "Verification request. User: " + user.username
+            email.body = form_verification_send.data['message']
+            email.from_email = user.email
+            email.to = ['travelappservice@gmail.com']
+            images = request.FILES['images']
+            email.attach(images.name, images.read(), images.content_type)
+            email.send()
+
+            return HttpResponseRedirect('/user/verification/send')
+    return render(request,
+                  'UserProfile/verification/verification_send_page.html',
+                  {'form_verification_send': form_verification_send})
 
 
 def create_diary(request):

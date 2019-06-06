@@ -43,6 +43,7 @@
 
     <script src="{% static '/js/jchat.js' %}" type="text/javascript"></script>
 
+
     <script>
 
 
@@ -90,7 +91,12 @@
                             ShowDeleteMessage();
                             $('#form-message').on('submit', function (e) {
                                 e.preventDefault();
-                                let messageText = $(this).find('textarea').val();
+                                data_to_send = {
+                                    "command": "send",
+                                    'chat': data.join,
+                                    'message': $(this).find('textarea').val()
+                                };
+
                                 var has_files = false;
                                 $("input[type='file']").each(
                                     function (index, element) {
@@ -100,16 +106,6 @@
                                             return false;
                                         }
                                     });
-
-                                if (!has_files && messageText)    {
-                                    return;
-                                }
-
-                                data_to_send = {
-                                    "command": "send",
-                                    'chat': data.join,
-                                    'message': messageText
-                                };
 
                                 if (has_files) {
                                     form_mess = new FormData($(this).get(0));
@@ -134,7 +130,7 @@
                             });
                             $('.delete-mess-button').on('click', function (e) {
 
-
+                                console.log('cl');
                                 var data_to_send = {
                                     "command": "delete",
                                     'chat': data.join,
@@ -153,11 +149,11 @@
                 else {
                     if (data.message) {
 
-                        let new_message = document.createElement('div');
+                        new_message = document.createElement('div');
                         new_message.innerHTML = data.message;
 
                         if (data.user =={{ request.user.id }}) {
-                            new_message.setAttribute("class","user-owner");
+                            new_message.className = 'owner-message';
                         }
 
                         $('#' + data.chat + " .content").append(new_message);
@@ -166,7 +162,6 @@
                         $('.file-label').empty();
 
                     }
-
                     else {
                         if (data.delete) {
 
@@ -177,7 +172,7 @@
                     }
                 }
             }
-        };
+        }
 
         inChat = function (chatSlug) {
             return $("#" + chatSlug).length > 0;
@@ -219,6 +214,5 @@
 
 
     </script>
-
 
 {% endblock %}

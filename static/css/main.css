@@ -1,25 +1,8 @@
-/* main background */
-body {
-	background-color: #c2cad6 !important;
-}
-
-/* block colors */
-.block {
-	background-color: #fff;
-}
-.block-header {
-	border-top: 2px solid #007bff;
-}
-.block-footer {
-	border-bottom: 2px solid #007bff;
-}
-
 body {
     background-color: #c2cad6 !important; /* Бекграунд страницы */
 }
 
 html, body {
-
     height: 100%; /* Для прижатия футера к низу */
 }
 
@@ -49,38 +32,40 @@ footer {
     color: white;
 }
 
+.horizontal-line {
+    margin: 0; /* Отступы от разделяющей линии */
+}
 
-/*** Config ***/
-/* block */
-.block {
+.block { /* Конфигурация блоков всех страниц */
 	padding: 5px;
-	margin-bottom: 10px;
+	margin-bottom: 7px;
 	background-color: #fff;
 	border-radius: 3px;
 }
 
+/* note */
+.note-header>div {
+    display: inline-block;
+}
+
+.note-interaction {
+    float: right;
+}
+
+.note-content {
+    margin: 0 -5px;
+}
+
 .information-block p {
-	margin-bottom: 3px;
-}
-
-
-.block-header {
-	border-radius: 7px 7px 0px 0px;
-	margin-bottom: 3px;
-}
-
-.block-footer {
-	border-radius: 0px 0px 7px 7px;
+    margin-bottom: 5px !important;
 }
 
 /* user info */
 
 .avatar img {
 	border-radius: 7px;
-	margin-bottom: 15px;
+	margin-bottom: 7px;
 }
-
-/* note */
 
 .avatar-small {
     width: 50px;
@@ -89,24 +74,7 @@ footer {
     float: left;
 }
 
-.note-header {
-	margin: 0 0 3px 0 !important;
-	height: 60px;
-}
-
-.note-locate button {
-	float: right;
-}
-
-.note-stats a {
-	margin-right: 15px;
-	float: right;
-	font-size: 26px;
-}
-
-.auth-body, .house-edit-body, .house-page-body, .diary-edit-body, .diary-content, .info-block {
-    margin-bottom: 3px !important;
-}
+/* old css */
 
 .search-header, .rate-header {
     margin-bottom: 10px !important;
@@ -118,9 +86,7 @@ footer {
     color: white;
 }
 
-.container {
-    padding-top: 75px;
-}
+
 
 .file-label {
     display: none;
