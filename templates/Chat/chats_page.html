@@ -149,11 +149,13 @@
                 else {
                     if (data.message) {
 
-                        new_message = document.createElement('div');
+
+
+                        let new_message = document.createElement('div');
                         new_message.innerHTML = data.message;
 
                         if (data.user =={{ request.user.id }}) {
-                            new_message.className = 'owner-message';
+                            new_message.setAttribute("class","user-owner");
                         }
 
                         $('#' + data.chat + " .content").append(new_message);

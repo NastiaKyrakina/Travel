@@ -74,7 +74,7 @@ class Chat(models.Model):
         if self.chat_type == Chat.P2P:
             opponent = self.member_set.exclude(user=user).first()
 
-            if opponent and opponent.user.userinfo:
+            if opponent and opponent.user and opponent.user.userinfo:
                 return opponent.user.userinfo.big_photo
         return None
 

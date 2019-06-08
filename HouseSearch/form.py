@@ -4,7 +4,8 @@ from django.utils.translation import ugettext_lazy as _
 
 import re
 from UserProfile.models import Country
-from HouseSearch.models import House, HousePhoto, Rate, MAX_PRICE, MAX_ROOMS, MAX_SLEEPER, SORT_DICT
+from HouseSearch.models import House, \
+    HousePhoto, Rate, Booking, MAX_PRICE, MAX_ROOMS, MAX_SLEEPER, SORT_DICT
 
 from Lib.convertion import from_dict_to_list
 from datetime import datetime, date
@@ -294,7 +295,6 @@ class SearchHousesForm(forms.Form):
                 del dict[key]
         return dict
 
-
 class RateForm(forms.ModelForm):
     class Meta:
         model = Rate
@@ -313,11 +313,52 @@ class RateForm(forms.ModelForm):
             }),
         }
 
-    def save(self, user, house, *args, **kwargs):
-        new_rate = Rate(comment=self.cleaned_data['comment'],
-                        value=self.cleaned_data['value'])
-        new_rate.user = user
-        new_rate.house = house
 
-        new_rate.save()
-        return new_rate
+class BookingForm(forms.ModelForm):
+    class Meta:
+        model = Booking
+        fields = ['start', 'people', 'comment', 'phone_num']
+        widgets = {
+            'start': forms.TextInput(attrs={
+                'class': "datepicker-here form-control",
+                'data-position': "right top",
+                'data-multiple-dates-separator': " - ",
+                'data-range': "true",
+            }),
+            'people': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'value': 1,
+                'min': 1,
+                'max': 100,
+            }),
+            'comment': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': _('Leave here your remarks and wishes'),
+            }),
+            'phone_num': forms.TextInput(attrs={
+                          'class': 'form-control mb-2',
+                          'title': _("enter a phone number"),
+                      }),
+
+        }
+
+    def save(self, user, house, *args, **kwargs):
+        rg = self.cleaned_data['start'].split(' - ')
+        start_arr = rg[0].split('/')
+        end_arr = rg[1].split('/')
+
+        start = date(int(start_arr[2]), int(start_arr[0]), int(start_arr[1]))
+        end = date(int(end_arr[2]), int(end_arr[0]), int(end_arr[1]))
+
+        new_booking = Booking(start=start,
+                              end=end,
+                              people=self.cleaned_data['people'],
+                              comment=self.cleaned_data['comment'],
+                              phone_num=self.cleaned_data['phone_num'],
+                              )
+        new_booking.user = user
+        new_booking.house = house
+
+        new_booking.save()
+        return new_booking
+
