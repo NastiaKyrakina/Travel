@@ -12,28 +12,40 @@ from django.core.mail.message import EmailMessage
 
 from Lib.FileFormats import handle_uploaded_file
 
+from UserProfile.models import UserInfo
+
 # Create your views here.
+
 
 def verification_send_page(request):
     user = UserExt.objects.get(pk=request.user.pk)
-    form_verification_send = VerificationSendForm(request.POST)
-    if request.method == 'POST':
-        print("123:" + str(form_verification_send.is_valid()))
-        if form_verification_send.is_valid():
-            # Создание, наполнение, отплавка сообщения
-            email = EmailMessage()
-            email.subject = "Verification request. User: " + user.username
-            email.body = form_verification_send.data['message']
-            email.from_email = user.email
-            email.to = ['travelappservice@gmail.com']
-            images = request.FILES['images']
-            email.attach(images.name, images.read(), images.content_type)
-            email.send()
+    form_verification_send = VerificationSendForm()
+    if user.userinfo.virifield == UserInfo.UNDF:
+        if request.method == 'POST':
+            form_verification_send = VerificationSendForm(request.POST)
+            if form_verification_send.is_valid():
+                # Создание, наполнение, отплавка сообщения
+                email = EmailMessage()
+                email.subject = "Verification request. User: " + user.username
+                email.body = form_verification_send.data['message']
+                email.from_email = user.email
+                email.to = ['travelappservice@gmail.com']
+                image1 = request.FILES['image1']
+                image2 = request.FILES['image2']
+                email.attach(image1.name, image1.read(), image1.content_type)
+                email.attach(image2.name, image2.read(), image2.content_type)
+                email.send()
+                user.userinfo.virifield = UserInfo.WAIT
+                user.userinfo.save()
+                return HttpResponseRedirect('/user/verification/send')
 
-            return HttpResponseRedirect('/user/verification/send')
     return render(request,
                   'UserProfile/verification/verification_send_page.html',
-                  {'form_verification_send': form_verification_send})
+                  {'form_verification_send': form_verification_send}) \
+        if user.userinfo.virifield == UserInfo.UNDF \
+        else render(request,
+                    'UserProfile/verification/verification_status_page.html',
+                    {'UserStatus': UserInfo})
 
 
 def create_diary(request):
