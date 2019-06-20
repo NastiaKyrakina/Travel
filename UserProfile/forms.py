@@ -5,6 +5,7 @@ from UserProfile.models import *
 
 from datetime import datetime
 
+
 class VerificationSendForm(forms.Form):
     message = forms.CharField(
         required=False,

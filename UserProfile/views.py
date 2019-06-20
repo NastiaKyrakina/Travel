@@ -17,6 +17,13 @@ from UserProfile.models import UserInfo
 # Create your views here.
 
 
+def payment_page(request):
+
+    return render(request,
+                  "userProfile/payment/payment_page.html", {'signature': "ZZrpaLg2Lbipxu+9ZP0Irhdcg2w=",
+                                                            'data': "eyJwdWJsaWNfa2V5IjoiaTg3ODE1ODI5NjQiLCJ2ZXJzaW9uIjoiMyIsImFjdGlvbiI6InBheSIsImFtb3VudCI6IjEwMCIsImN1cnJlbmN5IjoiVUFIIiwiZGVzY3JpcHRpb24iOiIiLCJvcmRlcl9pZCI6IjAwMDAwMSJ9"})
+
+
 def verification_send_page(request):
     user = UserExt.objects.get(pk=request.user.pk)
     form_verification_send = VerificationSendForm()

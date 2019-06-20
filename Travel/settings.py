@@ -84,13 +84,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Travel.wsgi.application'
 
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'travelappservice@gmail.com'
-EMAIL_HOST_PASSWORD = 'dkrkmkurakinasedykh'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-
-
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
@@ -99,8 +92,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'travel',
-        'USER': 'west',
-        'PASSWORD': 'west4',
+        'USER': 'postgres',
+        'PASSWORD': '1234567890',
         'HOST': 'localhost',
         'PORT': '5432',
     }
